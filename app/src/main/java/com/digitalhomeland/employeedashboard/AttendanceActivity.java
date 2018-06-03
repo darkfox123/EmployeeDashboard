@@ -149,22 +149,30 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
                   checkTime = Utils.getCurrentTime();
                 String currentDate = Utils.getCurrentDate();
                 String req;
-                if(action.equals("checkIn") && db.getEmpRosterByDate(Utils.getCurrentDate()).getCheckIn().equals("")) {
-                   // req = "{\"reciever\":\"checkIn\",\"params\":{\"storeId\":\"" + db.getStore().getStoreId() + "\",\"empId\":\"" + db.getUser().getEmployeeId() + "\",\"date\":\"" + currentDate + "\",\"checkIn\":\"" + checkTime + "\"}}";
-                    req = "{\"reciever\":\"CheckIn\",\"params\":{\"storeId\":\"" + db.getStore().getStoreId() + "\",\"empId\":\"" + db.getUser().getEmployeeId() + "\",\"date\":\"" + currentDate + "\",\"checkIn\":\"" + checkTime + "\"}}";
-                    postRequest = new Volley_Request();
-                    postRequest.createRequest(mContext, getResources().getString(R.string.mJSONURL_emproster), "POST", "CheckIn", req);
-                }else if (action.equals("checkOut") && db.getEmpRosterByDate(Utils.getCurrentDate()).getCheckOut().equals("")){
-                    req = "{\"reciever\":\"CheckOut\",\"params\":{\"storeId\":\"" + db.getStore().getStoreId() + "\",\"empId\":\"" + db.getUser().getEmployeeId() + "\",\"date\":\"" + currentDate + "\",\"checkOut\":\"" + checkTime + "\"}}";
-                    postRequest = new Volley_Request();
-                    postRequest.createRequest(mContext, getResources().getString(R.string.mJSONURL_emproster), "POST", "CheckOut", req);
-                }
+                  /*
+                  int i;
+                  for(i=0; i<3; i++) {
+                      c.add(Calendar.DAY_OF_WEEK, i);
+                      SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                      String currentDate = df.format(c.getTime());
+                      */
+                      if (action.equals("checkIn") && db.getEmpRosterByDate(Utils.getCurrentDate()).getCheckIn().equals("")) {
+                          // req = "{\"reciever\":\"checkIn\",\"params\":{\"storeId\":\"" + db.getStore().getStoreId() + "\",\"empId\":\"" + db.getUser().getEmployeeId() + "\",\"date\":\"" + currentDate + "\",\"checkIn\":\"" + checkTime + "\"}}";
+                          req = "{\"reciever\":\"CheckIn\",\"params\":{\"storeId\":\"" + db.getStore().getStoreId() + "\",\"empId\":\"" + db.getUser().getEmployeeId() + "\",\"date\":\"" + currentDate + "\",\"checkIn\":\"" + checkTime + "\"}}";
+                          postRequest = new Volley_Request();
+                          postRequest.createRequest(mContext, getResources().getString(R.string.mJSONURL_emproster), "POST", "CheckIn", req);
+                      } else if (action.equals("checkOut") && db.getEmpRosterByDate(Utils.getCurrentDate()).getCheckOut().equals("")) {
+                          req = "{\"reciever\":\"CheckOut\",\"params\":{\"storeId\":\"" + db.getStore().getStoreId() + "\",\"empId\":\"" + db.getUser().getEmployeeId() + "\",\"date\":\"" + currentDate + "\",\"checkOut\":\"" + checkTime + "\"}}";
+                          postRequest = new Volley_Request();
+                          postRequest.createRequest(mContext, getResources().getString(R.string.mJSONURL_emproster), "POST", "CheckOut", req);
+                      }
+                  //}
                   locationManager.removeUpdates((LocationListener) this);
                   locationManager = null;
               }
         }catch(Exception e)
         {
-
+Log.d("myTag", " Error : ", e);
         }
     }
 
@@ -177,7 +185,7 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         db.deleteTasks();
         Log.d("myTag", "taskd count : " + db.getTaskdCount());
         //String req = "{\"reciever\":\"getEmp\", \"params\" :{ \"employeeId\":\""+ db.getUser().getEmployeeId() + "\" , \"storeId\":\"" + db.getStore().getStoreId() + "\"}}";
-        String req = "{\"reciever\":\"getEmp\", \"params\" :{ \"employeeId\":\""+ "pathak" + "\" , \"storeId\":\"" + db.getStore().getStoreId() + "\" , \"date\":\"" + Utils.getCurrentDate() + "\"}}";
+        String req = "{\"reciever\":\"getEmp\", \"params\" :{ \"employeeId\":\""+ db.getUser().getEmployeeId() + "\" , \"storeId\":\"" + db.getStore().getStoreId() + "\" , \"date\":\"" + Utils.getCurrentDate() + "\"}}";
         postRequest = new Volley_Request();
         postRequest.createRequest(mContext, mContext.getResources().getString(R.string.mJSONURL_taskd), "POST", "loadTD", req);
     }
@@ -199,7 +207,7 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
                 }
             //Log.d("myTag", "empcount : " + db.getTaskdCount());
             String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-            String req = "{\"reciever\":\"getEmp\", \"params\" :{ \"employeeId\":\""+ "pathak" + "\" , \"storeId\":\"" + db.getStore().getStoreId() + "\" , \"date\":\"" + Utils.getCurrentDate() + "\" , \"dayOfW\":\"" + "Monday" + "\"}}";
+            String req = "{\"reciever\":\"getEmp\", \"params\" :{ \"employeeId\":\""+ db.getUser().getEmployeeId() + "\" , \"storeId\":\"" + db.getStore().getStoreId() + "\" , \"date\":\"" + Utils.getCurrentDate() + "\" , \"dayOfW\":\"" + "Monday" + "\"}}";
             //String req = "{\"reciever\":\"getEmp\", \"params\" :{ \"employeeId\":\""+ db.getUser().getEmployeeId() + "\" , \"storeId\":\"" + db.getStore().getStoreId() + "\" , \"dayOfW\":\"" + days[c.DAY_OF_WEEK] + "\"}}";
             postRequest = new Volley_Request();
             postRequest.createRequest(mContext, mContext.getResources().getString(R.string.mJSONURL_taskw), "POST", "loadTW", req);

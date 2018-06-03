@@ -32,7 +32,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 42;
+    private static final int DATABASE_VERSION = 49;
 
     // Database Name
     private static final String DATABASE_NAME = "employeeDB";
@@ -251,6 +251,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMPROSTER);
         // Create tables again
         onCreate(db);
+    }
+
+    // Upgrading database
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
     /**

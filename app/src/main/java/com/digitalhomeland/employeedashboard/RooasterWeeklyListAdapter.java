@@ -65,6 +65,7 @@ public class RooasterWeeklyListAdapter extends BaseAdapter implements ListAdapte
         }
         DatabaseHandler db = new DatabaseHandler(mContext);
         //Handle TextView and display string from your list
+        if(dateList[position].equals(" ")) { return view;}
         final StRoster str = db.getSTRosterByDate(dateList[position]);
         final EmpRoster emr = db.getEmpRosterByDate(dateList[position]);
         Log.d("myTag", "str : " + str.getStoreStatus());

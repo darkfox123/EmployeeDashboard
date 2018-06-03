@@ -33,7 +33,11 @@ public class ViewRoster extends AppCompatActivity {
         SimpleDateFormat df2 = new SimpleDateFormat("dd/MM/yyyy");
         String currentDate = df2.format(c.getTime());
         for (int i = 0; i < 7; i++) {
-            dateList[i] = df2.format(c.getTime());
+            if(db.getSTRosterByDate(df2.format(c.getTime())) != null) {
+                dateList[i] = df2.format(c.getTime());
+            } else {
+                dateList[i] = " ";
+            }
             c.add(Calendar.DAY_OF_WEEK, 1);
         }
         RooasterWeeklyListAdapter adapter = new RooasterWeeklyListAdapter(getApplicationContext(), dateList, colorList, ViewRoster.this);

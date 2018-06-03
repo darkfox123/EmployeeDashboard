@@ -117,6 +117,7 @@ public class SignupActivity extends AppCompatActivity {
             if(!responseObj.has("success")) {
                 user = new User(responseObj.getString("_id"), responseObj.getString("firstName"), responseObj.getString("middleName"), responseObj.getString("lastName"), responseObj.getString("phone"), responseObj.getString("email"), responseObj.getString("aadharId"), responseObj.getString("employeeId"), responseObj.getString("storeId"));
                 db.addUsers(user);
+                Log.d("myTag", "user added : " + db.getUser().getFirstName());
             }
             //List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             // Log.d("myTag", "sync:addingApplication: " + testAddress.getAddressLine(0).equals(locRes.getAddress()) + " : " + locRes.getLat().equals(testLoc.getLatitude()) + " : " + locRes.getLong().equals(testLoc.getLongitude()));
